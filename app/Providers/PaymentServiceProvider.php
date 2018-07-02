@@ -27,8 +27,8 @@ class PaymentServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind(PaymentContract::class, function(){
-            $class = 'App\\Services\\' . request()->paymentType . 'PaymentService';
+        $this->app->bind(PaymentContract::class, function () {
+            $class = 'App\\Services\\' . str_replace('-', '', request()->paymentType) . 'PaymentService';
             if (!class_exists($class)) throw new PaymentMethodNotAllowed();
             return new $class();
         });
